@@ -13,7 +13,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
   });
 
-app.post('/api/reviews', (req, res) => {
+app.post('/', (req, res) => {
+    res.json(`${req.method} request
+    received`)
+})
+
+app.put('/', (req, res) => {
     res.json(`${req.method} request
     received`)
 })
