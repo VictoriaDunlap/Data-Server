@@ -2,16 +2,19 @@
     {
       "firstname": "julius",
       "lastname": "hibbert",
+      "availability": "monday_0900",
       "id": "37t8"
     },
     {
       "firstname": "algernop",
       "lastname": "krieger",
-      "id": "37t8"
+      "availability": "tuesday_1100",
+      "id": "701e"
     },
     {
       "firstname": "nick",
       "lastname": "riviera",
-      "id": "37t8"
+      "availability": "friday_1000",
+      "id": "0a46"
     }
-  ]
+]

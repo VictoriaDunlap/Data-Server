@@ -1,5 +1,5 @@
 const express = require('express')
-const data = require('./db/data.json')
+const data = require('./db/appts.json')
 const path = require('path')
 const { readFromFile, readAndAppend } = require('./helpers/fsUtils')
 const uuid = require('./helpers/uuid')
@@ -14,29 +14,44 @@ app.use(express.json())
 // Root directory
 app.use(express.static('public'));
 
+// GET routing to main page 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 })
 
-router.get('/', (req, res) => {
-    console.info(`${req.method} request received for tips`)
-    readFromFile('./db/tips.json').then((data) => res.json(JSON.parse(data)))
+// GET routing to access the doctor.json db
+app.get('/api/doctors', (req, res) => {
+    console.info(`${req.method} request received for doctors`)
+    readFromFile('./db/doctor.json')
+    .then((data) => res.json(JSON.parse(data)))
 })
 
-// app.post('/', (req, res) => {
-//     res.json(`${req.method} request
-//     received`)
-// })
+// GET route for rendering doctor availability list 
+app.get('/api/appts', (req, res) => {
+    console.info(`${req.method} request received to view appointments`)
+    
+    // destructuring 
+    const { firstname, lastname, appointment, kind } = req.body
+    // if appt request has these params, show corresponding doc and availability
+    if (req.body) {
+      const upcomingAppts = {
+        firstname,
+        lastname,
+        appointment,
+        kind,
+      }
+    
+      readFromFile(upcomingAppts, './db/appts.json')
+      res.json(`Appointments display`)
+    } else {
+      res.error('Error in viewing appointments')
+    }
+})
 
-// app.put('/', (req, res) => {
-//     res.json(`${req.method} request
-//     received`)
-// })
+app.delete('/', (req, res) => {
+     res.send('DELETE request to homepage')
+})
 
-// app.delete('/', (req, res) => {
-//      res.send('DELETE request to homepage')
-// })
-
-// app.listen(PORT, () => {
-//     console.log(`Example app listening at http://localhost:${PORT}`);
-// })
+app.listen(PORT, () => {
+    console.log(`Test app listening at http://localhost:${PORT}`);
+})

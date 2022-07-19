@@ -1,13 +1,12 @@
 <!-- automatically integrate >or combine< calendars from existing systems 
 
  >>> GET a list of doctors(doc/docs) 
-        >>> (firstName, lastname) => {sort and return an array}
+        >>> (req, res) => {read files}
         >>> docs have unique ID/Firstname/Lastname
 
- >>> GET a list of appointments(appt/appts) FOREACH doctor and FOREACH day 
-        >>> (doctor, date) => {FORLOOP through and return list}
+ >>> GET a list of appointments(appt/appts) 
         >>> appts have unique ID/PatientFirstname/PatientLastname/Date/Time/NewPatient OR Follow-up 
-                >>> sounds like a switch case. would have to be able to read the old data and label it based on if the new user input matches the DB 
+               
 
  >>> DELETE existing appts 
         >>> (doctor, date) => {FORLOOP through and return list and if selected, will be deleted}

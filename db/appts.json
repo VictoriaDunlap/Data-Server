@@ -1,0 +1,23 @@
+[
+    {
+      "firstname": "john",
+      "lastname": "doe",
+      "appointment": "monday_0900",
+      "kind": "follow-up",
+      "id": "8734"
+    },
+    {
+      "firstname": "jane",
+      "lastname": "doe",
+      "appointment": "tuesday_1100",
+      "kind": "follow-up",
+      "id": "7843"
+    },
+    {
+      "firstname": "dorothy",
+      "lastname": "jones",
+      "appointment": "friday_1000",
+      "kind": "new_patient",
+      "id": "3487"
+    }
+]
