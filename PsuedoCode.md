@@ -9,7 +9,7 @@
                
 
  >>> DELETE existing appts 
-        >>> (doctor, date) => {FORLOOP through and return list and if selected, will be deleted}
+        >>> loop through and return list and if selected, will be deleted}
 
  >>> POST new appts to calendar 
         >>> (date, time by 15 minute increments) => {FORLOOP through times to find available times that match the request and add to calendar}

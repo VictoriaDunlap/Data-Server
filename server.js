@@ -1,5 +1,6 @@
 const express = require('express')
-const data = require('./db/appts.json')
+const apptData = require('./db/appts.json')
+const docData = require('./db/doctor.json')
 const path = require('path')
 const { readFromFile, readAndAppend } = require('./helpers/fsUtils')
 const uuid = require('./helpers/uuid')
@@ -22,12 +23,13 @@ app.get('/', (req, res) => {
 // GET routing to access the doctor.json db
 app.get('/api/doctors', (req, res) => {
     console.info(`${req.method} request received for doctors`)
-    readFromFile('./db/doctor.json')
+    readFromFile(docData)
     .then((data) => res.json(JSON.parse(data)))
 })
 
-// GET route for rendering doctor availability list 
+// GET route for rendering doctor appointments list 
 app.get('/api/appts', (req, res) => {
+    // sanity check
     console.info(`${req.method} request received to view appointments`)
     
     // destructuring 
@@ -41,16 +43,57 @@ app.get('/api/appts', (req, res) => {
         kind,
       }
     
-      readFromFile(upcomingAppts, './db/appts.json')
+      readFromFile(upcomingAppts, apptData)
       res.json(`Appointments display`)
     } else {
       res.error('Error in viewing appointments')
     }
 })
 
-app.delete('/', (req, res) => {
-     res.send('DELETE request to homepage')
+// DELETE route for appts
+app.delete('/api/delete.appts', (req, res) => {
+    // sanity check
+    console.info(`${req.method} request received to view appointments`)
+
+    const { firstname, lastname, appointment, kind } = req.body
+    
+    if (req.body) {
+      const upcomingAppts = {
+        firstname,
+        lastname,
+        appointment,
+        kind,
+      }
+    
+      readFromFile(upcomingAppts, apptData)
+      res.json(`Delete successful`)
+    } else {
+      res.error('Error in deleting appointment')
+    }
 })
+
+// POST routing to add new appts
+app.post('/api/appts', (req, res) => {
+    // sanity check
+    console.info(`${req.method} request received to add an appointment`)
+  
+    const { firstname, lastname, appointment, kind } = req.body
+  
+    if (req.body) {
+      const newAppt = {
+        firstname,
+        lastname,
+        appointment,
+        kind,
+        id: uuid(),
+      };
+  
+      readAndAppend(newAppt, apptData);
+      res.json(`Appointment added successfully 🚀`);
+    } else {
+      res.error('Error in adding appointment');
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Test app listening at http://localhost:${PORT}`);
